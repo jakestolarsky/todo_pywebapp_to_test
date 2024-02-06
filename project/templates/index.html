@@ -1,14 +1,75 @@
 <!DOCTYPE html>
-<html lang="ang">
-    <head>
-        <meta charset="UTF-8">
-        <title>ToDo Fastapi app</title>
-    </head>
-    <body>
-        <h1>ToDo List</h1>
-        <h2>Hello: {{ message }}</h2>
-        <input type="text" id="todoInput" placeholder="Add new task">
-        <button onclick="">Add Task</button>
-        <ul id="todoList"></ul>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO App</title>
+    <!-- Style mogą być dostosowane według potrzeb -->
+</head>
+<body>
+    <div>
+        <h2>TODO List</h2>
+        <input type="text" id="taskInput" placeholder="Add a new task"/>
+        <button onclick="addTask()">Add Task</button>
+        <ul id="tasksList"></ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchTasks();
+        });
+
+        async function fetchTasks() {
+            const response = await fetch('http://localhost:8000/tasks/');
+            const tasks = await response.json();
+            const tasksList = document.getElementById('tasksList');
+            tasksList.innerHTML = ''; // Wyczyść listę przed ponownym załadowaniem
+            tasks.forEach(task => {
+                let li = document.createElement('li');
+                li.textContent = task.name;
+
+                // Przycisk do zatwierdzania zadania
+                let completeButton = document.createElement('button');
+                completeButton.textContent = '✔️';
+                completeButton.onclick = () => completeTask(task.id);
+
+                // Przycisk do usuwania zadania
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = '❌';
+                deleteButton.onclick = () => deleteTask(task.id);
+
+                li.appendChild(completeButton);
+                li.appendChild(deleteButton);
+                tasksList.appendChild(li);
+            });
+        }
+
+        async function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const task = taskInput.value;
+            if (task) {
+                await fetch('http://localhost:8000/tasks/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({name: task})
+                });
+                taskInput.value = '';
+                fetchTasks(); // Odśwież listę zadań
+            }
+        }
+
+        async function completeTask(taskId) {
+            await fetch(`http://localhost:8000/tasks/${taskId}/complete`, {
+                method: 'PUT'
+            });
+            fetchTasks(); // Odśwież listę zadań
+        }
+
+        async function deleteTask(taskId) {
+            await fetch(`http://localhost:8000/tasks/${taskId}`, {
+                method: 'DELETE'
+            });
+            fetchTasks(); // Odśwież listę zadań
+        }
+    </script>
+</body>
 </html>

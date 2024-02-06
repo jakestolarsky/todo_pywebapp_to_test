@@ -7,7 +7,7 @@
 </head>
 <body>
     <div>
-        <h2>TODO List</h2>
+        <h1>TODO List</h1>
         <input type="text" id="taskInput" placeholder="Add a new task"/>
         <button onclick="addTask()">Add Task</button>
         <ul id="tasksList"></ul>
@@ -24,22 +24,24 @@
             const tasksList = document.getElementById('tasksList');
             tasksList.innerHTML = ''; // Wyczyść listę przed ponownym załadowaniem
             tasks.forEach(task => {
-                let li = document.createElement('li');
-                li.textContent = task.name;
+                if(!task.completed) {
+                    let li = document.createElement('li');
+                    li.textContent = task.name;
 
-                // Przycisk do zatwierdzania zadania
-                let completeButton = document.createElement('button');
-                completeButton.textContent = '✔️';
-                completeButton.onclick = () => completeTask(task.id);
+                    // Przycisk do zatwierdzania zadania
+                    let completeButton = document.createElement('button');
+                    completeButton.textContent = '✔️';
+                    completeButton.onclick = () => completeTask(task.id);
 
-                // Przycisk do usuwania zadania
-                let deleteButton = document.createElement('button');
-                deleteButton.textContent = '❌';
-                deleteButton.onclick = () => deleteTask(task.id);
+                    // Przycisk do usuwania zadania
+                    let deleteButton = document.createElement('button');
+                    deleteButton.textContent = '❌';
+                    deleteButton.onclick = () => deleteTask(task.id);
 
-                li.appendChild(completeButton);
-                li.appendChild(deleteButton);
-                tasksList.appendChild(li);
+                    li.appendChild(completeButton);
+                    li.appendChild(deleteButton);
+                    tasksList.appendChild(li);
+                }
             });
         }
 

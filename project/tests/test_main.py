@@ -1,7 +1,7 @@
 from fastapi.responses import HTMLResponse
 import httpx
 from fastapi.testclient import TestClient
-from main import app
+from project.main import app
 
 
 client = TestClient(app)

@@ -27,6 +27,10 @@ class Task(BaseModel):
 
 tasks: List[Task] = []
 
+@app.get("/tasks/completed/count")
+async def get_completed_tasks_count():
+    completed_tasks_count = sum(task.completed for task in tasks)
+    return {"completed_tasks_count": completed_tasks_count}
 
 @app.get("/", response_class=HTMLResponse)
 async def read_route(request: Request):

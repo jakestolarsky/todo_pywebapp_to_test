@@ -8,6 +8,7 @@
 <body>
     <div>
         <h1>TODO List</h1>
+        <p>Your completed tasks: <span id="completedTasksCount">0</span> </p>
         <input type="text" id="taskInput" placeholder="Add a new task"/>
         <button onclick="addTask()">Add Task</button>
         <ul id="tasksList"></ul>
@@ -16,7 +17,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetchTasks();
+            fetchCompleted();
         });
+
+        async function fetchCompleted() {
+            const response = await fetch('http://localhost:8000/tasks/completed/count')
+            const completedCounter = await response.json()
+            document.getElementById('completedTasksCount').textContent = completedCounter.completed_tasks_count;
+        };
 
         async function fetchTasks() {
             const response = await fetch('http://localhost:8000/tasks/');
@@ -63,7 +71,8 @@
             await fetch(`http://localhost:8000/tasks/${taskId}/complete`, {
                 method: 'PUT'
             });
-            fetchTasks(); // Odśwież listę zadań
+            fetchTasks();
+            fetchCompleted();// Odśwież listę zadań
         }
 
         async function deleteTask(taskId) {

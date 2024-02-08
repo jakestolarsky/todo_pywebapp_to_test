@@ -60,3 +60,11 @@ async def delete_task(task_id: int):
         if task.id == task_id:
             return tasks.pop(index)
     raise HTTPException(status_code=404, detail="Task not found")
+
+@app.put("/tasks/{task_id}/update", response_model=Task)
+async def update_task_name(task_id: int, task: Task):
+    for existing_task in tasks:
+        if existing_task.id == task_id:
+            existing_task.name = task.name
+            return existing_task
+    raise HTTPException(status_code=404, detail="Task not found")

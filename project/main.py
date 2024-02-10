@@ -5,10 +5,17 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 
-from pydantic import BaseModel
-from typing import List, Optional
+from app.api.task_api import router as tasks_router
+
+#task api
+from typing import List
+
+from app.models.task_model import tasks
+from app.schemas.task_schema import Task
 
 app = FastAPI()
+
+app.include_router(tasks_router)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -23,21 +30,14 @@ app.add_middleware(
     allow_headers=["*"],  # Akceptuj wszystkie nagłówki
 )
 
-class Task(BaseModel):
-    id: Optional[int] = None
-    name: str
-    completed: bool = False
-
-tasks: List[Task] = []
+@app.get("/", response_class=HTMLResponse)
+async def read_route(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/tasks/completed/count")
 async def get_completed_tasks_count():
     completed_tasks_count = sum(task.completed for task in tasks)
     return {"completed_tasks_count": completed_tasks_count}
-
-@app.get("/", response_class=HTMLResponse)
-async def read_route(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/tasks/", response_model=Task)
 async def create_task(task: Task):

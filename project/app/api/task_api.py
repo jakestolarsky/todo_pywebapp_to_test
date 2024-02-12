@@ -12,12 +12,7 @@ router = APIRouter()
 
 @router.get("/", response_class=HTMLResponse)
 async def get_index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-@router.get("/tasks/completed/count")
-async def get_completed_tasks_count():
-    completed_tasks_count = sum(task.completed for task in tasks)
-    return {"completed_tasks_count": completed_tasks_count}
+    return templates.TemplateResponse(request, "index.html", {"request": request})
 
 @router.post("/tasks/", response_model=Task)
 async def create_task(task: Task):
@@ -36,6 +31,11 @@ async def complete_task(task_id: int):
             task.completed = True
             return task
     raise HTTPException(status_code=404, detail="Task not found")
+
+@router.get("/tasks/completed/count")
+async def get_completed_tasks_count():
+    completed_tasks_count = sum(task.completed for task in tasks)
+    return {"completed_tasks_count": completed_tasks_count}
 
 @router.put("/tasks/{task_id}/update", response_model=Task)
 async def update_task_name(task_id: int, task: Task):

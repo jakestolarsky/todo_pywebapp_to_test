@@ -2,6 +2,6 @@ language: python
 python:
  - "3.12"
 install:
- - pip install -r requirements.txt
+ - pip install -r project/requirements.txt
 script:
  - pytest

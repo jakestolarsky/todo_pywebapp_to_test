@@ -86,8 +86,7 @@ def test_tasks_counter_more(client):
 
 def test_change_name_task(client):
     client.post("/tasks/", json={"name": "Task"})
-    task_id = client.get("/tasks/").json()[0]
-    resp = client.put(f"/tasks/{task_id["id"]}/update", json={"name": "New Task"})
+    resp = client.put("/tasks/1/update", json={"name": "New Task"})
     data = resp.json()
 
     assert resp.status_code == 200
@@ -101,8 +100,8 @@ def test_change_name_nonexistent_task(client):
     assert resp.json() == {"detail": "Task not found"}
 
 def test_delete_task(client):
-    task_to_delete = client.post("/tasks/", json={"name": "Task"}).json()
-    resp = client.delete(f"/tasks/{task_to_delete["id"]}")
+    client.post("/tasks/", json={"name": "Task"}).json()
+    resp = client.delete("/tasks/1")
     data = client.get("/tasks/").json()
 
     assert resp.status_code == 200

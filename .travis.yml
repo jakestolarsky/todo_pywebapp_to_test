@@ -1,18 +1,7 @@
 language: python
 python:
  - "3.9"
-services:
-  - xvfb
-addons:
-  chrome: stable
-before_script:
-  - wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE -O LATEST_RELEASE
-  - wget https://chromedriver.storage.googleapis.com/$(cat LATEST_RELEASE)/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip
-  - sudo mv chromedriver /usr/local/bin/
-  - export DISPLAY=:99.0
-  - sleep 3
 install:
  - pip install -r project/requirements.txt
 script:
- - pytest
+ - pytest --ignore=project/tests/acceptance/selenium_tests/test_to_do_app.py

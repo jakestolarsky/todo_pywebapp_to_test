@@ -7,7 +7,6 @@ from app.models.task_model import tasks
 from app.schemas.task_schema import Task
 
 
-
 router = APIRouter()
 
 @router.get("/", response_class=HTMLResponse)

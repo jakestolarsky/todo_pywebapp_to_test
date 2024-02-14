@@ -13,32 +13,28 @@ async function fetchTasks() {
     const response = await fetch('http://localhost:8000/tasks/');
     const tasks = await response.json();
     const tasksList = document.getElementById('tasksList');
-    tasksList.innerHTML = ''; // Wyczyść listę przed ponownym załadowaniem
+    tasksList.innerHTML = '';
     tasks.forEach(task => {
         if(!task.completed) {
             let li = document.createElement('li');
 
-            // Nazwa zadania z możliwością edycji
             let taskSpan = document.createElement('span');
             taskSpan.textContent = task.name;
             taskSpan.className = 'task-name';
             li.appendChild(taskSpan);
 
-            // Przycisk do edycji nazwy zadania
             let editButton = document.createElement('button');
             editButton.textContent = '✏️';
             editButton.className = 'edit-task-btn';
             editButton.onclick = () => editTaskName(task.id, taskSpan);
             li.appendChild(editButton);
 
-            // Przycisk do zatwierdzania zadania
             let completeButton = document.createElement('button');
             completeButton.textContent = '✔️';
             completeButton.className = 'complete-task-btn';
             completeButton.onclick = () => completeTask(task.id);
             li.appendChild(completeButton);
 
-            // Przycisk do usuwania zadania
             let deleteButton = document.createElement('button');
             deleteButton.textContent = '❌';
             deleteButton.className = 'delete-task-btn';
@@ -60,7 +56,8 @@ async function addTask() {
             body: JSON.stringify({name: task})
         });
         taskInput.value = '';
-        fetchTasks(); // Odśwież listę zadań
+
+        fetchTasks();
     }
 }
 
@@ -69,7 +66,6 @@ function editTaskName(taskId, taskSpan) {
     let addTaskButton = document.getElementById('addTaskButton');
     let confirmEditButton = document.getElementById('confirmEdit');
 
-    // Ustaw placeholder na "Edit task name:" podczas edycji
     taskInput.placeholder = "Edit task name:";
     taskInput.value = taskSpan.textContent;
     addTaskButton.style.display = 'none';
@@ -81,9 +77,8 @@ function editTaskName(taskId, taskSpan) {
             taskSpan.textContent = taskInput.value;
         }
 
-        // Przywróć UI do stanu początkowego
         taskInput.value = '';
-        taskInput.placeholder = "Add a new task"; // Zmień placeholder z powrotem na "Add a new task"
+        taskInput.placeholder = "Add a new task";
         addTaskButton.style.display = 'inline';
         confirmEditButton.style.display = 'none';
     };
@@ -95,20 +90,23 @@ async function updateTaskName(taskId, newName) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({name: newName})
     });
-    fetchTasks(); // Można pominąć, jeśli aktualizacja na froncie jest wystarczająca
+
+    fetchTasks();
 }
 
 async function completeTask(taskId) {
     await fetch(`http://localhost:8000/tasks/${taskId}/complete`, {
         method: 'PUT'
     });
+
     fetchTasks();
-    fetchCompleted();// Odśwież listę zadań
+    fetchCompleted();
 }
 
 async function deleteTask(taskId) {
     await fetch(`http://localhost:8000/tasks/${taskId}`, {
         method: 'DELETE'
     });
-    fetchTasks(); // Odśwież listę zadań
+
+    fetchTasks();
 }

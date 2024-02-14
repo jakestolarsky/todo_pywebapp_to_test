@@ -1,6 +1,5 @@
 import pytest
 from fastapi.testclient import TestClient
-from fastapi.responses import HTMLResponse
 
 from main import app
 

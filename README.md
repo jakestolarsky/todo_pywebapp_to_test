@@ -176,6 +176,7 @@ To ensure that all functionalities perform correctly on the frontend, a simple t
 ---
 ## ♻️ Continuous Integration and Deployment
 
+[![Build Status](https://app.travis-ci.com/jakestolarsky/todo_pywebapp_to_test.svg?branch=main)](https://app.travis-ci.com/jakestolarsky/todo_pywebapp_to_test)
 Travis CI is set up for continuous integration, running tests on every commit.
 
 ---

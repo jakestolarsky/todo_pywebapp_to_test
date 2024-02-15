@@ -1,5 +1,5 @@
 
-# ✅ TODO WEB APP - Documentation
+# ✅ TODO WEB APP TO TEST - Documentation
 
 ![Image](documentation/todoapp.png)
 
@@ -8,7 +8,7 @@
 Welcome to my TODO web application documentation. This application serves as a simple, intuitive platform for managing daily tasks. Built with HTML/CSS/JS, Python FastAPI, and integrated with Pytest and Selenium for automated testing, this project demonstrates testing practices and continuous integration using Travis CI.
 
 ## 📋 Table of contents
-- [✅ TODO WEB APP - Documentation](#-todo-web-app---documentation)
+- [✅ TODO WEB APP TO TEST - Documentation](#-todo-web-app-to-test---documentation)
 	- [👋 Introduction](#-introduction)
 	- [📋 Table of contents](#-table-of-contents)
 	- [🏃‍♂️ Installation and Setup](#️-installation-and-setup)

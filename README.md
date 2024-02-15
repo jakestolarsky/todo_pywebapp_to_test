@@ -1,13 +1,32 @@
 
 # ✅ TODO WEB APP - Documentation
 
+![Image](documentation/todoapp.png)
+
 ## 👋 Introduction
 
 Welcome to my TODO web application documentation. This application serves as a simple, intuitive platform for managing daily tasks. Built with HTML/CSS/JS, Python FastAPI, and integrated with Pytest and Selenium for automated testing, this project demonstrates testing practices and continuous integration using Travis CI.
 
 ## 📋 Table of contents
-
-{{TOC}}
+- [✅ TODO WEB APP - Documentation](#-todo-web-app---documentation)
+	- [👋 Introduction](#-introduction)
+	- [📋 Table of contents](#-table-of-contents)
+	- [🏃‍♂️ Installation and Setup](#️-installation-and-setup)
+		- [Requirements](#requirements)
+		- [Installation Instructions](#installation-instructions)
+		- [Running the Application](#running-the-application)
+	- [🧠 Usage of the application](#-usage-of-the-application)
+		- [UI Frontend](#ui-frontend)
+		- [API Endpoints](#api-endpoints)
+	- [🤖 Automated Testing](#-automated-testing)
+		- [👈 Backend Testing -\> Pytest](#-backend-testing---pytest)
+			- [1. Unit tests](#1-unit-tests)
+			- [2. Integration tests](#2-integration-tests)
+			- [3. Functional tests](#3-functional-tests)
+		- [👉 Frontend Testing -\> Selenium](#-frontend-testing---selenium)
+			- [Testing scenario](#testing-scenario)
+	- [♻️ Continuous Integration and Deployment](#️-continuous-integration-and-deployment)
+	- [🚀 Conclusion](#-conclusion)
 
 ---
 ## 🏃‍♂️ Installation and Setup
@@ -35,8 +54,6 @@ Welcome to my TODO web application documentation. This application serves as a s
 The application is structured into two main components: the frontend, built with HTML/CSS/JS for a dynamic user experience, and the backend, powered by Python FastAPI for efficient, scalable API services.
 
 ### UI Frontend
-
-![Image](documentation/todoapp.png)
 
 The frontend of the application displayed in the image appears to be a simple to-do list web application, which is likely designed to help users manage their tasks. Here is a detailed description:
 
@@ -92,7 +109,7 @@ These system tests, implemented with pytest and FastAPI's TestClient, validate v
 
 To ensure that all functionalities perform correctly on the frontend, a simple test scenario was created and implemented using Selenium [`project/tests/acceptance/selenium_tests/test_to_do_app.py`](https://github.com/jakestolarsky/todo_pywebapp_to_test/blob/main/project/tests/functional/test_task_api.py)
 
-### Testing scenario
+#### Testing scenario
 
 1. Initialize WebDriver and Navigate to Application
 
